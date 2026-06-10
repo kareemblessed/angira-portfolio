@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Portfolio Design System - Modern & Refined */
+
+@layer base {
+  :root {
+    --background: 220 20% 96%;
+    --foreground: 230 25% 15%;
+
+    --card: 220 25% 98%;
+    --card-foreground: 230 25% 15%;
+
+    --popover: 220 25% 98%;
+    --popover-foreground: 230 25% 15%;
+
+    --primary: 250 85% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 20% 92%;
+    --secondary-foreground: 230 25% 15%;
+
+    --muted: 220 18% 90%;
+    --muted-foreground: 230 15% 40%;
+
+    --accent: 320 75% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 230 20% 85%;
+    --input: 230 20% 85%;
+    --ring: 250 85% 60%;
+
+    --radius: 0.75rem;
+
+    /* Custom portfolio tokens - more vibrant */
+    --golden: 250 85% 60%;
+    --golden-hover: 250 85% 52%;
+    --cream: 220 20% 96%;
+    --cream-dark: 220 20% 92%;
+    --text-dark: 230 25% 15%;
+    --text-muted: 230 15% 40%;
+    --blob-blue: 250 85% 65%;
+    --blob-purple: 320 75% 60%;
+    --gradient-start: 250 85% 60%;
+    --gradient-end: 320 75% 55%;
+
+    --sidebar-background: 220 25% 98%;
+    --sidebar-foreground: 230 25% 15%;
+    --sidebar-primary: 250 85% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 92%;
+    --sidebar-accent-foreground: 230 25% 15%;
+    --sidebar-border: 230 20% 85%;
+    --sidebar-ring: 250 85% 60%;
+  }
+
+  .dark {
+    --background: 240 10% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 240 10% 9%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 240 10% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 220 90% 60%;
+    --primary-foreground: 240 10% 6%;
+
+    --secondary: 240 6% 14%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 240 6% 14%;
+    --muted-foreground: 220 9% 60%;
+
+    --accent: 262 83% 65%;
+    --accent-foreground: 240 10% 6%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 220 90% 60%;
+
+    --sidebar-background: 240 10% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 220 90% 60%;
+    --sidebar-primary-foreground: 240 10% 6%;
+    --sidebar-accent: 240 6% 14%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 240 6% 18%;
+    --sidebar-ring: 220 90% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .bg-gradient-primary {
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .blob {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: blob-morph 8s ease-in-out infinite;
+  }
+
+  @keyframes blob-morph {
+    0%, 100% {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: hsl(var(--primary)); }
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid hsl(var(--primary));
+    animation: typewriter 3s steps(20) 1s forwards, blink 0.75s step-end infinite;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply backdrop-blur-xl bg-card/80 border border-border/50;
+  }
+
+  /* Subtle shadow for cards */
+  .shadow-soft {
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.08), 0 2px 8px -2px hsl(var(--foreground) / 0.04);
+  }
+
+  .dark .shadow-soft {
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.15), 0 0 0 1px hsl(var(--border));
+  }
+}
