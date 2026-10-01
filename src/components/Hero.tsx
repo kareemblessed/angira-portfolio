@@ -1,169 +1,159 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Github, BookOpen } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.png";
+import { ArrowRight, BadgeCheck, Github, Linkedin, PenLine } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.webp";
+import { certifiers, profile, stats } from "@/data/portfolio";
 
-const roles = ["AI/ML Engineer", "Automation Specialist", "IoT Developer", "Prompt Engineer"];
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay, ease },
+});
+
+const socials = [
+  { href: profile.links.github, label: "GitHub", icon: Github },
+  { href: profile.links.linkedin, label: "LinkedIn", icon: Linkedin },
+  { href: profile.links.devto, label: "Writing on DEV", icon: PenLine },
+];
 
 const Hero = () => {
-  const [currentRole, setCurrentRole] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const role = roles[currentRole];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (displayText.length < role.length) {
-            setDisplayText(role.slice(0, displayText.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          if (displayText.length > 0) {
-            setDisplayText(displayText.slice(0, -1));
-          } else {
-            setIsDeleting(false);
-            setCurrentRole((prev) => (prev + 1) % roles.length);
-          }
-        }
-      },
-      isDeleting ? 50 : 100
-    );
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentRole]);
-
-  const bubbles = [
-    { size: 120, x: "10%", y: "15%", duration: 20, delay: 0 },
-    { size: 80, x: "85%", y: "20%", duration: 25, delay: 2 },
-    { size: 60, x: "70%", y: "70%", duration: 18, delay: 1 },
-    { size: 100, x: "15%", y: "75%", duration: 22, delay: 3 },
-    { size: 40, x: "50%", y: "10%", duration: 15, delay: 0.5 },
-    { size: 70, x: "30%", y: "50%", duration: 28, delay: 4 },
-    { size: 50, x: "90%", y: "50%", duration: 20, delay: 2.5 },
-    { size: 90, x: "5%", y: "40%", duration: 24, delay: 1.5 },
-    { size: 35, x: "60%", y: "85%", duration: 16, delay: 3.5 },
-    { size: 55, x: "40%", y: "30%", duration: 21, delay: 0.8 },
-  ];
-
   return (
-    <section id="home" className="min-h-screen relative overflow-hidden flex items-center">
-      {/* Animated Background Bubbles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {bubbles.map((bubble, index) => (
-          <motion.div
-            key={index}
-            className="absolute rounded-full"
-            style={{
-              width: bubble.size,
-              height: bubble.size,
-              left: bubble.x,
-              top: bubble.y,
-              background: index % 2 === 0 
-                ? "radial-gradient(circle at 30% 30%, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05))"
-                : "radial-gradient(circle at 30% 30%, hsl(var(--accent) / 0.12), hsl(var(--accent) / 0.03))",
-              boxShadow: index % 2 === 0
-                ? "inset 0 0 20px hsl(var(--primary) / 0.1), 0 0 40px hsl(var(--primary) / 0.05)"
-                : "inset 0 0 20px hsl(var(--accent) / 0.1), 0 0 40px hsl(var(--accent) / 0.05)",
-              border: "1px solid hsl(var(--primary) / 0.1)",
-            }}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{
-              opacity: [0.3, 0.6, 0.3],
-              scale: [1, 1.1, 1],
-              x: [0, 30, -20, 0],
-              y: [0, -40, 20, 0],
-            }}
-            transition={{
-              duration: bubble.duration,
-              delay: bubble.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-        
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+    <section id="home" className="relative overflow-hidden pt-28 md:pt-36">
+      {/* Backdrop */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-grid mask-fade" />
+        <div className="absolute inset-0 bg-glow" />
       </div>
-      
-      <div className="container mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <h1 className="text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Hi, I'm{" "}
-              <span className="text-primary">Angira Ronan</span>
-            </h1>
-            
-            <div className="text-xl text-muted-foreground flex items-center gap-2">
-              <span>I am {roles[currentRole]?.charAt(0).match(/[aeiouAEIOU]/) ? 'an' : 'a'}</span>
-              <span className="text-primary font-semibold min-w-[220px]">
-                {displayText}
-                <span className="animate-pulse">|</span>
+
+      <div className="container max-w-6xl">
+        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+          {/* Copy */}
+          <div className="lg:col-span-7">
+            <motion.div {...fadeUp(0)} className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-card/60 py-1.5 pl-2 pr-4 text-xs text-muted-foreground backdrop-blur">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2 py-0.5 font-medium text-primary">
+                <BadgeCheck className="h-3.5 w-3.5" />
+                AWS Certified
               </span>
-            </div>
-
-            <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
-              I design, build, and deploy intelligent automation systems that bridge data science and real-world application. From self-healing AI models to complete workflow automation, I create scalable solutions that solve operational problems.
-            </p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="flex flex-wrap gap-4 pt-4"
-            >
-              <Button size="lg" className="font-semibold" asChild>
-                <a href="#projects">View Projects</a>
-              </Button>
-              <Button variant="outline" size="lg" className="font-semibold gap-2" asChild>
-                <a href="https://github.com/kareemblessed" target="_blank" rel="noopener noreferrer">
-                  <Github className="w-5 h-5" />
-                  GitHub
-                </a>
-              </Button>
-              <Button variant="ghost" size="lg" className="font-semibold gap-2" asChild>
-                <a href="https://dev.to/kareemblessed" target="_blank" rel="noopener noreferrer">
-                  <BookOpen className="w-5 h-5" />
-                  Dev Blog
-                </a>
-              </Button>
+              {profile.role} · {profile.location}
             </motion.div>
-          </motion.div>
 
-          {/* Right Content - Profile Image */}
+            <motion.h1
+              {...fadeUp(0.08)}
+              className="text-balance font-display text-[2.75rem] font-medium leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.5rem]"
+            >
+              AI Engineer specialising in{" "}
+              <span className="font-serif text-[1.08em] font-normal italic tracking-normal text-primary">production</span>{" "}
+              automation.
+            </motion.h1>
+
+            <motion.p {...fadeUp(0.16)} className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+              Designing end-to-end workflows that integrate OpenAI/LLM capabilities, CRM systems and enrichment APIs into
+              real business processes.
+            </motion.p>
+
+            <motion.div {...fadeUp(0.24)} className="mt-10 flex flex-wrap items-center gap-3">
+              <a
+                href="#work"
+                className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
+              >
+                View projects
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <div className="ml-1 flex items-center gap-1">
+                {socials.map(({ href, label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  >
+                    <Icon className="h-[18px] w-[18px]" />
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Portrait */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex justify-center lg:justify-end"
+            transition={{ duration: 1, delay: 0.2, ease }}
+            className="lg:col-span-5"
           >
-            <div className="relative">
-              <div className="w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
+            <figure className="relative mx-auto max-w-sm lg:ml-auto lg:mr-0">
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-card">
                 <img
                   src={profilePhoto}
-                  alt="Ronan Angira"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  alt={`Portrait of ${profile.name}`}
+                  className="aspect-[4/5] w-full object-cover object-[50%_20%] grayscale"
                 />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
+                  <div>
+                    <p className="font-display text-lg font-medium">{profile.name}</p>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/60">AI Engineer</p>
+                  </div>
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/80 backdrop-blur">
+                    UTC+3
+                  </span>
+                </figcaption>
               </div>
-              {/* Decorative ring */}
-              <div className="absolute -inset-4 border-2 border-primary/20 rounded-full" />
-              {/* Initials badge */}
-              <div className="absolute -bottom-2 -right-2 w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl shadow-lg">
-                AR
-              </div>
-            </div>
+              {/* Floating credential card */}
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease }}
+                className="absolute -left-4 top-8 hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:block md:-left-10"
+              >
+                <p className="eyebrow mb-2">Certified</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li className="flex items-center gap-2">
+                    <BadgeCheck className="h-4 w-4 text-primary" />
+                    AWS AI Practitioner
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <BadgeCheck className="h-4 w-4 text-primary" />
+                    Microsoft Applied Skills ×2
+                  </li>
+                </ul>
+              </motion.div>
+            </figure>
           </motion.div>
         </div>
+
+        {/* Stats */}
+        <motion.dl
+          {...fadeUp(0.4)}
+          className="mt-20 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-border md:mt-28 md:grid-cols-4 [&>div]:bg-background"
+          style={{ gap: "1px" }}
+        >
+          {stats.map((stat) => (
+            <div key={stat.label} className="p-6 md:p-8">
+              <dt className="sr-only">{stat.label}</dt>
+              <dd className="font-display text-4xl font-medium tracking-tight md:text-5xl">{stat.value}</dd>
+              <dd className="mt-3 max-w-[16rem] text-sm leading-snug text-muted-foreground">{stat.label}</dd>
+            </div>
+          ))}
+        </motion.dl>
+
+        {/* Certifier strip */}
+        <motion.div
+          {...fadeUp(0.5)}
+          className="flex flex-col items-center justify-between gap-4 border-b border-border py-10 md:flex-row"
+        >
+          <p className="eyebrow">Certified by</p>
+          <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+            {certifiers.map((c) => (
+              <li key={c} className="font-display text-base font-medium tracking-tight text-muted-foreground/80 md:text-lg">
+                {c}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
       </div>
     </section>
   );
