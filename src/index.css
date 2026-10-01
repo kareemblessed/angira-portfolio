@@ -6,47 +6,48 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 0 0% 9%;
+    --background: 60 9% 98%;
+    --foreground: 24 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 24 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 24 10% 10%;
 
-    --primary: 158 64% 32%;
+    --primary: 161 94% 26%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 12% 94%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 60 5% 94%;
+    --secondary-foreground: 24 10% 10%;
 
-    --muted: 40 10% 93%;
-    --muted-foreground: 0 0% 38%;
+    --muted: 60 5% 94%;
+    --muted-foreground: 25 6% 36%;
 
-    --accent: 158 64% 32%;
+    --accent: 161 94% 26%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 30 8% 87%;
-    --input: 30 8% 87%;
-    --ring: 158 64% 32%;
+    --border: 20 6% 88%;
+    --input: 20 6% 88%;
+    --ring: 161 94% 26%;
 
     --radius: 0.75rem;
 
-    --grid-line: 0 0% 0% / 0.05;
-    --glow: 158 64% 40% / 0.12;
+    --grid-line: 24 10% 10% / 0.04;
+    --glow: 161 94% 30% / 0.07;
+    --surface-shadow: 0 1px 2px rgb(28 25 23 / 0.04), 0 6px 20px -10px rgb(28 25 23 / 0.10);
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 9%;
-    --sidebar-primary: 158 64% 32%;
+    --sidebar-foreground: 24 10% 10%;
+    --sidebar-primary: 161 94% 26%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 12% 94%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 30 8% 87%;
-    --sidebar-ring: 158 64% 32%;
+    --sidebar-accent: 60 5% 94%;
+    --sidebar-accent-foreground: 24 10% 10%;
+    --sidebar-border: 20 6% 88%;
+    --sidebar-ring: 161 94% 26%;
   }
 
   .dark {
@@ -80,6 +81,7 @@
 
     --grid-line: 0 0% 100% / 0.045;
     --glow: 156 64% 52% / 0.14;
+    --surface-shadow: none;
 
     --sidebar-background: 0 0% 4%;
     --sidebar-foreground: 0 0% 95%;
@@ -104,12 +106,12 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "cv11", "ss03";
+    font-feature-settings: "cv11", "ss01";
   }
 
   h1, h2, h3, h4 {
     @apply font-display;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.022em;
   }
 
   ::selection {
@@ -135,6 +137,12 @@
   /* Small uppercase label used for eyebrows and metadata */
   .eyebrow {
     @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+  }
+
+  /* Card surface: bordered, with a soft shadow in light mode only */
+  .surface {
+    @apply border border-border bg-card;
+    box-shadow: var(--surface-shadow);
   }
 
   .bg-grid {

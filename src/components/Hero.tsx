@@ -150,7 +150,7 @@ const Hero = () => {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6, ease }}
-                className="absolute -left-4 bottom-24 hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:block md:-left-10"
+                className="absolute -right-6 -top-[5.75rem] hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl lg:block"
               >
                 <p className="eyebrow mb-2">Certified</p>
                 <ul className="space-y-1.5 text-sm">
@@ -171,7 +171,7 @@ const Hero = () => {
         {/* Stats */}
         <motion.dl
           {...fadeUp(0.4)}
-          className="mt-20 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-border md:mt-28 md:grid-cols-4 [&>div]:bg-background"
+          className="mt-20 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-border shadow-[var(--surface-shadow)] md:mt-28 md:grid-cols-4 [&>div]:bg-card"
           style={{ gap: "1px" }}
         >
           {stats.map((stat) => (

@@ -33,24 +33,18 @@ type SectionProps = {
 };
 
 const Section = ({ id, index, label, title, intro, children, className }: SectionProps) => (
-  <section id={id} className={cn("relative py-24 md:py-32", className)}>
-    <div className="container max-w-6xl">
-      <Reveal className="mb-14 md:mb-20 grid gap-6 md:grid-cols-12 md:items-end">
-        <div className="md:col-span-7">
-          <p className="eyebrow mb-5">
-            <span className="text-primary">{index}</span>
-            <span className="mx-2 opacity-40">/</span>
-            {label}
-          </p>
-          <h2 className="text-balance font-display text-4xl font-semibold tracking-tight md:text-5xl">{title}</h2>
-        </div>
-        {intro && (
-          <p className="text-pretty text-muted-foreground md:col-span-5 md:text-right md:text-[15px] leading-relaxed">
-            {intro}
-          </p>
-        )}
+  <section id={id} className={cn("relative py-16 md:py-24", className)}>
+    <div className="container grid max-w-6xl gap-10 lg:grid-cols-12 lg:gap-12">
+      <Reveal className="self-start lg:sticky lg:top-28 lg:col-span-4">
+        <p className="eyebrow mb-4">
+          <span className="text-primary">{index}</span>
+          <span className="mx-2 opacity-40">/</span>
+          {label}
+        </p>
+        <h2 className="text-balance font-display text-3xl font-semibold md:text-4xl">{title}</h2>
+        {intro && <p className="mt-4 max-w-xs text-pretty text-[15px] leading-relaxed text-muted-foreground">{intro}</p>}
       </Reveal>
-      {children}
+      <div className="min-w-0 lg:col-span-8">{children}</div>
     </div>
   </section>
 );
