@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowRight, BadgeCheck, Github, Linkedin, PenLine } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.webp";
@@ -41,6 +41,63 @@ const TypingRoles = () => {
         <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[0.2em] animate-pulse bg-primary" />
       </span>
     </p>
+  );
+};
+
+const captions = [
+  { text: "AI Engineer", certified: false },
+  { text: "AWS Certified AI Practitioner", certified: true },
+  { text: "Microsoft Applied Skills ×2", certified: true },
+];
+
+const CAPTION_MS = 3000;
+
+// Name stays put; the line beneath rotates through title and certifications.
+const PortraitCaption = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % captions.length), CAPTION_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  const current = captions[index];
+
+  return (
+    <div className="min-w-0">
+      <p className="font-display text-lg font-semibold">{profile.name}</p>
+      <div className="relative mt-1 h-5 overflow-hidden" aria-live="polite">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.p
+            key={current.text}
+            initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
+            transition={{ duration: 0.45, ease }}
+            className="flex items-center gap-1.5 whitespace-nowrap text-[13px] font-medium text-white/80"
+          >
+            {current.certified && <BadgeCheck className="h-4 w-4 shrink-0 text-emerald-400" />}
+            {current.text}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+      <div className="mt-3 flex gap-1.5" aria-hidden="true">
+        {captions.map((c, i) => (
+          <span key={c.text} className="relative h-[3px] w-6 overflow-hidden rounded-full bg-white/20">
+            {i === index && (
+              <motion.span
+                key={index}
+                className="absolute inset-y-0 left-0 rounded-full bg-emerald-400"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: CAPTION_MS / 1000, ease: "linear" }}
+              />
+            )}
+            {i < index && <span className="absolute inset-0 rounded-full bg-white/50" />}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -134,36 +191,14 @@ const Hero = () => {
                   alt={`Portrait of ${profile.name}`}
                   className="aspect-[4/5] w-full object-cover object-[50%_20%] grayscale"
                 />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
-                  <div>
-                    <p className="font-display text-lg font-semibold">{profile.name}</p>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">AI Engineer</p>
-                  </div>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/80 backdrop-blur">
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-white">
+                  <PortraitCaption />
+                  <span className="hidden shrink-0 rounded-full border border-white/20 bg-white/10 px-3 py-1 min-[400px]:inline-block text-[11px] font-medium uppercase tracking-[0.14em] text-white/80 backdrop-blur">
                     UTC+3
                   </span>
                 </figcaption>
               </div>
-              {/* Floating credential card */}
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease }}
-                className="absolute -right-6 -top-[5.75rem] hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl lg:block"
-              >
-                <p className="eyebrow mb-2">Certified</p>
-                <ul className="space-y-1.5 text-sm">
-                  <li className="flex items-center gap-2">
-                    <BadgeCheck className="h-4 w-4 text-primary" />
-                    AWS AI Practitioner
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <BadgeCheck className="h-4 w-4 text-primary" />
-                    Microsoft Applied Skills ×2
-                  </li>
-                </ul>
-              </motion.div>
             </figure>
           </motion.div>
         </div>
