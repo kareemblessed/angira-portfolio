@@ -30,7 +30,7 @@ const Credentials = () => {
                 <span className="eyebrow">{cert.issuer}</span>
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
               </div>
-              <h3 className="mt-6 flex-1 text-pretty font-display text-lg font-medium leading-snug tracking-tight">
+              <h3 className="mt-6 flex-1 text-pretty font-display text-lg font-semibold leading-snug tracking-tight">
                 {cert.title}
               </h3>
               <div className="mt-6 flex items-center justify-between">
@@ -54,7 +54,7 @@ const Credentials = () => {
               <GraduationCap className="h-5 w-5" />
             </div>
             <p className="eyebrow mt-6">Education · {education.period}</p>
-            <h3 className="mt-3 font-display text-2xl font-medium tracking-tight">{education.degree}</h3>
+            <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight">{education.degree}</h3>
             <p className="mt-1 text-muted-foreground">{education.specialisation}</p>
             <p className="mt-4 font-medium">{education.school}</p>
           </div>

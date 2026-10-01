@@ -36,7 +36,7 @@ const Contact = () => {
             <span className="mx-2 opacity-40">/</span>
             Contact
           </p>
-          <h2 className="max-w-4xl text-balance font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] md:text-7xl">
+          <h2 className="max-w-4xl text-balance font-display text-5xl font-semibold leading-[1.02] tracking-[-0.035em] md:text-7xl">
             Get in touch
           </h2>
           <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">

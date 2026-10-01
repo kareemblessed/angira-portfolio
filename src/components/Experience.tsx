@@ -15,8 +15,8 @@ const Role = ({ item, current }: { item: ExperienceItem; current: boolean }) => 
     <article className="grid gap-6 border-t border-border py-10 md:grid-cols-12 md:gap-10">
       {/* Meta */}
       <div className="md:col-span-4">
-        <p className="font-mono text-xs tracking-wide text-muted-foreground">{item.period}</p>
-        <h3 className="mt-3 font-display text-2xl font-medium leading-tight tracking-tight">{item.company}</h3>
+        <p className="text-sm font-medium text-muted-foreground">{item.period}</p>
+        <h3 className="mt-3 font-display text-2xl font-semibold leading-tight tracking-tight">{item.company}</h3>
         <p className="mt-1.5 text-muted-foreground">
           {item.location}
           {item.type && <> · {item.type}</>}
@@ -31,13 +31,13 @@ const Role = ({ item, current }: { item: ExperienceItem; current: boolean }) => 
 
       {/* Body */}
       <div className="md:col-span-8">
-        <p className="font-display text-lg font-medium">{item.role}</p>
+        <p className="font-display text-lg font-semibold">{item.role}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {item.metrics.map((m) => (
             <span
               key={m}
-              className="rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs text-foreground/90"
+              className="rounded-md border border-border bg-card px-2.5 py-1 text-[13px] text-foreground/90"
             >
               {m}
             </span>
@@ -65,7 +65,7 @@ const Role = ({ item, current }: { item: ExperienceItem; current: boolean }) => 
           </button>
         )}
 
-        <p className="mt-6 font-mono text-xs text-muted-foreground/80">{item.stack.join("  ·  ")}</p>
+        <p className="mt-6 text-[13px] text-muted-foreground/80">{item.stack.join("  ·  ")}</p>
       </div>
     </article>
   );

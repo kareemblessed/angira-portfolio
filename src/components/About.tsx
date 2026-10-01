@@ -28,9 +28,9 @@ const About = () => {
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-display text-xl font-medium tracking-tight">{area.title}</h3>
+                      <h3 className="font-display text-xl font-semibold tracking-tight">{area.title}</h3>
                       <p className="mt-2 text-pretty leading-relaxed text-muted-foreground">{area.body}</p>
-                      <p className="mt-4 font-mono text-xs text-muted-foreground/80">{area.tools.join("  ·  ")}</p>
+                      <p className="mt-4 text-[13px] text-muted-foreground/80">{area.tools.join("  ·  ")}</p>
                     </div>
                   </div>
                 </Reveal>

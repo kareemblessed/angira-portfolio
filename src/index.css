@@ -104,7 +104,12 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "ss01", "cv11";
+    font-feature-settings: "cv11", "ss03";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
@@ -127,9 +132,9 @@
     text-wrap: pretty;
   }
 
-  /* Small mono uppercase label used for eyebrows and metadata */
+  /* Small uppercase label used for eyebrows and metadata */
   .eyebrow {
-    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
+    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
   }
 
   .bg-grid {

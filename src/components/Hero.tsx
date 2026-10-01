@@ -35,7 +35,7 @@ const TypingRoles = () => {
   const article = /^[aeiou]/i.test(roles[roleIndex]) ? "an" : "a";
 
   return (
-    <p className="font-mono text-base text-muted-foreground md:text-lg" aria-label={`I am ${article} ${roles.join(", ")}`}>
+    <p className="text-base text-muted-foreground md:text-lg" aria-label={`I am ${article} ${roles.join(", ")}`}>
       <span aria-hidden="true">
         I am {article} <span className="text-primary">{text}</span>
         <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[0.2em] animate-pulse bg-primary" />
@@ -79,10 +79,10 @@ const Hero = () => {
 
             <motion.h1
               {...fadeUp(0.08)}
-              className="text-balance font-display text-[2.75rem] font-medium leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.5rem]"
+              className="text-balance font-display text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-[4.5rem]"
             >
               AI Engineer specialising in{" "}
-              <span className="font-serif text-[1.08em] font-normal italic tracking-normal text-primary">production</span>{" "}
+              <span className="text-primary">production</span>{" "}
               automation.
             </motion.h1>
 
@@ -137,10 +137,10 @@ const Hero = () => {
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
                   <div>
-                    <p className="font-display text-lg font-medium">{profile.name}</p>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/60">AI Engineer</p>
+                    <p className="font-display text-lg font-semibold">{profile.name}</p>
+                    <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">AI Engineer</p>
                   </div>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/80 backdrop-blur">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/80 backdrop-blur">
                     UTC+3
                   </span>
                 </figcaption>
@@ -177,7 +177,7 @@ const Hero = () => {
           {stats.map((stat) => (
             <div key={stat.label} className="p-6 md:p-8">
               <dt className="sr-only">{stat.label}</dt>
-              <dd className="font-display text-4xl font-medium tracking-tight md:text-5xl">{stat.value}</dd>
+              <dd className="font-display text-4xl font-semibold tracking-tight md:text-5xl">{stat.value}</dd>
               <dd className="mt-3 max-w-[16rem] text-sm leading-snug text-muted-foreground">{stat.label}</dd>
             </div>
           ))}
@@ -191,7 +191,7 @@ const Hero = () => {
           <p className="eyebrow">Certified by</p>
           <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
             {certifiers.map((c) => (
-              <li key={c} className="font-display text-base font-medium tracking-tight text-muted-foreground/80 md:text-lg">
+              <li key={c} className="font-display text-base font-semibold tracking-tight text-muted-foreground/80 md:text-lg">
                 {c}
               </li>
             ))}

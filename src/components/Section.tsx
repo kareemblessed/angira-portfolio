@@ -42,7 +42,7 @@ const Section = ({ id, index, label, title, intro, children, className }: Sectio
             <span className="mx-2 opacity-40">/</span>
             {label}
           </p>
-          <h2 className="text-balance font-display text-4xl font-medium tracking-tight md:text-5xl">{title}</h2>
+          <h2 className="text-balance font-display text-4xl font-semibold tracking-tight md:text-5xl">{title}</h2>
         </div>
         {intro && (
           <p className="text-pretty text-muted-foreground md:col-span-5 md:text-right md:text-[15px] leading-relaxed">

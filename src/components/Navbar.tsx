@@ -56,7 +56,7 @@ const Navbar = () => {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50 motion-reduce:animate-none" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
-          <span className="font-display text-[15px] font-medium tracking-tight">{profile.name}</span>
+          <span className="font-display text-[15px] font-semibold tracking-tight">{profile.name}</span>
         </a>
 
         <div className="hidden items-center gap-1 md:flex">

@@ -33,7 +33,7 @@ const Featured = ({ project, index }: { project: FeaturedProject; index: number 
           <span className="mx-2 opacity-40">—</span>
           {project.kind}
         </p>
-        <h3 className="mt-5 font-display text-3xl font-medium tracking-tight md:text-4xl">{project.title}</h3>
+        <h3 className="mt-5 font-display text-3xl font-semibold tracking-tight md:text-4xl">{project.title}</h3>
         <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">{project.summary}</p>
 
         <ul className="mt-8 space-y-3">
@@ -102,7 +102,7 @@ const Projects = () => {
       </div>
 
       <Reveal className="mb-8 mt-20 flex items-end justify-between gap-6">
-        <h3 className="font-display text-2xl font-medium tracking-tight">More projects</h3>
+        <h3 className="font-display text-2xl font-semibold tracking-tight">More projects</h3>
         <p className="eyebrow hidden sm:block">{otherProjects.length} projects</p>
       </Reveal>
 
@@ -110,11 +110,11 @@ const Projects = () => {
         {otherProjects.map((p, i) => (
           <Reveal key={p.title} delay={(i % 3) * 0.06} className="bg-background">
             <article className="group flex h-full flex-col p-7 transition-colors hover:bg-card">
-              <p className="font-display text-3xl font-medium tracking-tight text-primary">{p.metric}</p>
+              <p className="font-display text-3xl font-semibold tracking-tight text-primary">{p.metric}</p>
               <p className="mt-1 text-sm text-muted-foreground">{p.metricLabel}</p>
-              <h4 className="mt-8 font-display text-lg font-medium tracking-tight">{p.title}</h4>
+              <h4 className="mt-8 font-display text-lg font-semibold tracking-tight">{p.title}</h4>
               <p className="mt-2 flex-1 text-pretty text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
-              <p className="mt-6 font-mono text-[11px] text-muted-foreground/80">{p.stack.join("  ·  ")}</p>
+              <p className="mt-6 text-xs text-muted-foreground/80">{p.stack.join("  ·  ")}</p>
             </article>
           </Reveal>
         ))}

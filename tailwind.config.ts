@@ -14,10 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Geist", "system-ui", "sans-serif"],
-        display: ["Geist", "system-ui", "sans-serif"],
-        serif: ["Instrument Serif", "Georgia", "serif"],
-        mono: ["Geist Mono", "ui-monospace", "monospace"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Plus Jakarta Sans", "Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
