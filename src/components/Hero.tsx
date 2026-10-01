@@ -1,9 +1,48 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { ArrowRight, BadgeCheck, Github, Linkedin, PenLine } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.webp";
 import { certifiers, profile, stats } from "@/data/portfolio";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+const roles = ["AI/ML Engineer", "Automation Specialist", "IoT Developer", "Prompt Engineer"];
+
+const TypingRoles = () => {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const role = roles[roleIndex];
+    let delay = isDeleting ? 45 : 90;
+    if (!isDeleting && text === role) delay = 2000;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < role.length) setText(role.slice(0, text.length + 1));
+        else setIsDeleting(true);
+      } else if (text.length > 0) {
+        setText(text.slice(0, -1));
+      } else {
+        setIsDeleting(false);
+        setRoleIndex((i) => (i + 1) % roles.length);
+      }
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, roleIndex]);
+
+  const article = /^[aeiou]/i.test(roles[roleIndex]) ? "an" : "a";
+
+  return (
+    <p className="font-mono text-base text-muted-foreground md:text-lg" aria-label={`I am ${article} ${roles.join(", ")}`}>
+      <span aria-hidden="true">
+        I am {article} <span className="text-primary">{text}</span>
+        <span className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[0.2em] animate-pulse bg-primary" />
+      </span>
+    </p>
+  );
+};
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -47,7 +86,11 @@ const Hero = () => {
               automation.
             </motion.h1>
 
-            <motion.p {...fadeUp(0.16)} className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
+            <motion.div {...fadeUp(0.12)} className="mt-6 h-7">
+              <TypingRoles />
+            </motion.div>
+
+            <motion.p {...fadeUp(0.16)} className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
               Designing end-to-end workflows that integrate OpenAI/LLM capabilities, CRM systems and enrichment APIs into
               real business processes.
             </motion.p>
@@ -107,7 +150,7 @@ const Hero = () => {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.6, ease }}
-                className="absolute -left-4 top-8 hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:block md:-left-10"
+                className="absolute -left-4 bottom-24 hidden rounded-2xl border border-border bg-background/85 p-4 shadow-2xl shadow-black/20 backdrop-blur-xl sm:block md:-left-10"
               >
                 <p className="eyebrow mb-2">Certified</p>
                 <ul className="space-y-1.5 text-sm">

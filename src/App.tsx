@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { MotionConfig } from "framer-motion";
+import CustomCursor from "@/components/CustomCursor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -15,6 +16,7 @@ const App = () => (
     <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
       <MotionConfig reducedMotion="user">
       <TooltipProvider>
+        <CustomCursor />
         <Toaster />
         <Sonner />
         <BrowserRouter>
