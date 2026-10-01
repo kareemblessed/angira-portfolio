@@ -225,7 +225,7 @@ export const certifications = [
   },
   {
     title: "Build AI-powered solutions using Azure Database for PostgreSQL",
-    code: "Applied Skills",
+    code: "APL3019",
     issuer: "Microsoft",
     featured: true,
     url: "https://learn.microsoft.com/api/credentials/share/en-gb/AngiraRonan-3353/B94AF60EF2F53D65?sharingId=7005F12C6BFA5F2C",
@@ -247,13 +247,13 @@ export const certifications = [
     title: "Artificial Intelligence with Python",
     code: "Certificate",
     issuer: "Great Learning Academy",
-    url: "https://www.mygreatlearning.com/certificate/HBKRNJJM",
+    url: "https://www.mygreatlearning.com/certificate/HBKRNJJM?referrer_code=GL7PWZQQ",
   },
   {
     title: "Python for Machine Learning",
     code: "Certificate",
     issuer: "Great Learning Academy",
-    url: "https://www.mygreatlearning.com/certificate/ICABLZTB",
+    url: "https://www.mygreatlearning.com/certificate/ICABLZTB?referrer_code=GL7PWZQQ",
   },
 ];
 
