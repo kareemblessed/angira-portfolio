@@ -1,279 +1,125 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Github } from "lucide-react";
+import Section, { Reveal } from "@/components/Section";
+import { featuredProjects, otherProjects, type FeaturedProject } from "@/data/portfolio";
 
-const projects = [
-  {
-    title: "Forge AI — Collaborative AI Study Platform",
-    description: "AI study platform with PDF/YouTube ingestion, Gemini-powered study plans, live AI voice tutor, and collaborative study rooms with quiz battles.",
-    impact: "Live at forge-ai-vzy4.vercel.app",
-    tags: ["TypeScript", "Next.js", "Gemini API", "Supabase"],
-    color: "from-violet-500 to-purple-400",
-    link: "https://forge-ai-vzy4.vercel.app",
-  },
-  {
-    title: "Smart HR Selection System",
-    description: "Automated candidate evaluation using Gemini AI for intelligent resume screening.",
-    impact: "Reduced hiring time by 60%",
-    tags: ["n8n", "Gemini API", "REST", "Automation"],
-    color: "from-cyan-500 to-teal-400",
-  },
-  {
-    title: "Self-Healing Parking Detection",
-    description: "Production-grade CV system with autonomous retraining pipeline for real-time parking monitoring.",
-    impact: "93.2% accuracy with zero manual intervention",
-    tags: ["Flask", "n8n", "Computer Vision"],
-    color: "from-emerald-600 to-green-400",
-  },
-  {
-    title: "AI Job Finder",
-    description: "Intelligent job discovery platform with automated matching and personalized recommendations.",
-    impact: "3x more relevant job matches",
-    tags: ["n8n", "Apify", "Gemini", "Web Scraping"],
-    color: "from-violet-500 to-purple-400",
-  },
-  {
-    title: "Unit Evaluation System",
-    description: "Enterprise data integration platform with advanced validation rules and quality checks.",
-    impact: "95% reduction in data errors",
-    tags: ["n8n", "REST APIs", "JavaScript", "ETL"],
-    color: "from-sky-500 to-blue-400",
-  },
-  {
-    title: "Zoom Meeting Summarizer",
-    description: "Automated meeting insights extraction with action item tracking and ClickUp integration.",
-    impact: "Saved 5+ hours per week",
-    tags: ["OpenAI", "Zoom API", "ClickUp", "NLP"],
-    color: "from-amber-500 to-yellow-400",
-  },
-];
+const Spec = ({ project }: { project: FeaturedProject }) => (
+  <div className="overflow-hidden rounded-2xl border border-border bg-background font-mono text-[13px]">
+    <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+      <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/25" />
+      <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/25" />
+      <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/25" />
+      <span className="ml-3 text-xs text-muted-foreground">
+        {project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.spec
+      </span>
+    </div>
+    <dl className="divide-y divide-border">
+      {project.spec.map((row) => (
+        <div key={row.label} className="flex items-baseline justify-between gap-6 px-4 py-3.5">
+          <dt className="text-muted-foreground">{row.label}</dt>
+          <dd className="text-right text-foreground">{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+);
 
-const Projects = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+const Featured = ({ project, index }: { project: FeaturedProject; index: number }) => (
+  <article className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 transition-colors hover:border-foreground/20 md:p-10">
+    <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl transition-opacity duration-700 group-hover:opacity-100 md:opacity-60" />
+    <div className="relative grid gap-10 lg:grid-cols-12">
+      <div className="lg:col-span-7">
+        <p className="eyebrow">
+          <span className="text-primary">0{index + 1}</span>
+          <span className="mx-2 opacity-40">—</span>
+          {project.kind}
+        </p>
+        <h3 className="mt-5 font-display text-3xl font-medium tracking-tight md:text-4xl">{project.title}</h3>
+        <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">{project.summary}</p>
 
-  const navigate = useCallback((direction: "left" | "right") => {
-    if (direction === "left") {
-      setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-    } else {
-      setCurrentIndex((prev) => (prev + 1) % projects.length);
-    }
-  }, []);
+        <ul className="mt-8 space-y-3">
+          {project.outcomes.map((o) => (
+            <li key={o} className="relative pl-5 text-pretty leading-relaxed text-foreground/85">
+              <span className="absolute left-0 top-[0.7em] h-px w-2.5 bg-primary" />
+              {o}
+            </li>
+          ))}
+        </ul>
 
-  // Auto-rotate carousel
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => navigate("right"), 4000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, navigate]);
-
-  const getVisibleProjects = () => {
-    const visible = [];
-    for (let i = -1; i <= 1; i++) {
-      const index = (currentIndex + i + projects.length) % projects.length;
-      visible.push({ ...projects[index], position: i, originalIndex: index });
-    }
-    return visible;
-  };
-
-  // Simple horizontal layout with slight arc
-  const getCardStyle = (position: number) => {
-    const absPos = Math.abs(position);
-    
-    // Horizontal spacing
-    const xOffset = position * 340;
-    
-    // Slight downward offset for side cards
-    const yOffset = absPos * 30;
-    
-    // Scale decreases for side cards
-    const scale = position === 0 ? 1 : 0.9;
-    
-    // Opacity
-    const opacity = position === 0 ? 1 : 0.7;
-    
-    // Z-index for proper layering
-    const zIndex = 10 - absPos;
-    
-    // Subtle rotation
-    const rotation = position * 5;
-
-    return {
-      x: xOffset,
-      y: yOffset,
-      scale,
-      opacity,
-      zIndex,
-      rotateZ: rotation,
-    };
-  };
-
-  return (
-    <section id="projects" className="pt-24 pb-16 overflow-hidden bg-secondary/30">
-      <div className="container mx-auto px-6 relative z-30">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-80"
-        >
-          <h2 className="text-4xl font-display font-bold mb-4">Projects</h2>
-          <p className="text-muted-foreground text-lg">Key highlights of my work</p>
-        </motion.div>
-      </div>
-
-      {/* Arc Carousel with Navigation */}
-      <div 
-        className="relative h-[580px] flex items-start justify-center pt-8"
-        onMouseEnter={() => setIsAutoPlaying(false)}
-        onMouseLeave={() => setIsAutoPlaying(true)}
-      >
-        {/* Left Navigation Arrow */}
-        <motion.div
-          className="absolute left-4 md:left-12 lg:left-24 top-1/2 -translate-y-1/2 z-20"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => navigate("left")}
-            className="rounded-full w-14 h-14 border-2 border-primary/40 bg-background/80 backdrop-blur-sm hover:border-primary hover:bg-primary/10 transition-all shadow-lg"
-          >
-            <ChevronLeft className="w-6 h-6 text-primary" />
-          </Button>
-        </motion.div>
-
-        {/* Right Navigation Arrow */}
-        <motion.div
-          className="absolute right-4 md:right-12 lg:right-24 top-1/2 -translate-y-1/2 z-20"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => navigate("right")}
-            className="rounded-full w-14 h-14 border-2 border-primary/40 bg-background/80 backdrop-blur-sm hover:border-primary hover:bg-primary/10 transition-all shadow-lg"
-          >
-            <ChevronRight className="w-6 h-6 text-primary" />
-          </Button>
-        </motion.div>
-
-        <div className="relative w-full max-w-5xl mx-auto flex items-center justify-center px-20">
-          <AnimatePresence initial={false} mode="sync">
-            {getVisibleProjects().map((project) => (
-              <motion.div
-                key={project.originalIndex}
-                initial={{ 
-                  x: project.position > 0 ? 500 : -500, 
-                  opacity: 0, 
-                  scale: 0.8 
-                }}
-                animate={getCardStyle(project.position)}
-                exit={{ 
-                  x: project.position > 0 ? -500 : 500, 
-                  opacity: 0, 
-                  scale: 0.8 
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                }}
-                className="absolute cursor-pointer"
-                onClick={() => {
-                  if (project.position < 0) navigate("left");
-                  if (project.position > 0) navigate("right");
-                }}
-                style={{ transformOrigin: "center bottom" }}
-              >
-                <div
-                  className={`w-[280px] h-[400px] rounded-3xl p-5 flex flex-col bg-gradient-to-br ${project.color} shadow-2xl overflow-hidden relative transition-shadow duration-300 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4)]`}
-                >
-                  {/* Decorative elements */}
-                  <div className="absolute top-6 right-6 w-24 h-24 rounded-full bg-white/10 blur-2xl" />
-                  <div className="absolute bottom-20 left-0 w-40 h-40 rounded-full bg-white/5 blur-3xl" />
-                  <div className="absolute top-1/4 right-0 w-1 h-20 bg-white/20 rounded-full" />
-
-                  {/* Content */}
-                  <div className="flex-1 flex flex-col justify-between relative z-10 pt-2">
-                    {/* Tags at top */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <Badge
-                          key={tag}
-                          className="text-[10px] bg-white/20 text-white border-0 hover:bg-white/30 backdrop-blur-sm"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Main content area */}
-                    <div className="flex-1 flex flex-col justify-center">
-                      {/* Title */}
-                      <h3 className="text-xl font-display font-bold text-white mb-3 leading-tight">
-                        {project.title}
-                      </h3>
-
-                      {/* Description - removed line-clamp for full visibility */}
-                      <p className="text-white/85 text-sm mb-3 leading-relaxed">
-                        {project.description}
-                      </p>
-
-                      {/* Impact */}
-                      <p className="text-white/95 text-xs font-semibold flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/90" />
-                        {project.impact}
-                      </p>
-                    </div>
-
-                    {/* View button - only on center card */}
-                    {project.position === 0 && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.15, duration: 0.3 }}
-                      >
-                        <Button
-                          size="sm"
-                          className="gap-2 bg-white/20 text-white hover:bg-white/30 border-0 backdrop-blur-sm mt-4"
-                          asChild
-                        >
-                          <a href={(project as { link?: string }).link ?? "https://dev.to/kareemblessed"} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4" />
-                            View Project
-                          </a>
-                        </Button>
-                      </motion.div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        <div className="mt-8 flex flex-wrap gap-2">
+          {project.stack.map((s) => (
+            <span key={s} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+              {s}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Dots indicator */}
-      <div className="flex justify-center gap-2 mt-6">
-        {projects.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentIndex
-                ? "bg-primary w-6"
-                : "bg-primary/30 hover:bg-primary/50"
-            }`}
-          />
+      <div className="flex flex-col justify-between gap-6 lg:col-span-5">
+        <Spec project={project} />
+        <div className="flex flex-wrap gap-3">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            >
+              Live demo
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary"
+            >
+              <Github className="h-4 w-4" />
+              Source code
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </article>
+);
+
+const Projects = () => {
+  return (
+    <Section
+      id="work"
+      index="03"
+      label="Projects"
+      title="Projects"
+    >
+      <div className="space-y-6">
+        {featuredProjects.map((p, i) => (
+          <Reveal key={p.title}>
+            <Featured project={p} index={i} />
+          </Reveal>
         ))}
       </div>
-    </section>
+
+      <Reveal className="mb-8 mt-20 flex items-end justify-between gap-6">
+        <h3 className="font-display text-2xl font-medium tracking-tight">More projects</h3>
+        <p className="eyebrow hidden sm:block">{otherProjects.length} projects</p>
+      </Reveal>
+
+      <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+        {otherProjects.map((p, i) => (
+          <Reveal key={p.title} delay={(i % 3) * 0.06} className="bg-background">
+            <article className="group flex h-full flex-col p-7 transition-colors hover:bg-card">
+              <p className="font-display text-3xl font-medium tracking-tight text-primary">{p.metric}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{p.metricLabel}</p>
+              <h4 className="mt-8 font-display text-lg font-medium tracking-tight">{p.title}</h4>
+              <p className="mt-2 flex-1 text-pretty text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
+              <p className="mt-6 font-mono text-[11px] text-muted-foreground/80">{p.stack.join("  ·  ")}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
   );
 };
 

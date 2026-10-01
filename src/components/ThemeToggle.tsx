@@ -1,42 +1,19 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="relative overflow-hidden"
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
-      <motion.div
-        initial={false}
-        animate={{
-          rotate: theme === "dark" ? 0 : 180,
-          scale: theme === "dark" ? 1 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        className="absolute"
-      >
-        <Moon className="h-5 w-5" />
-      </motion.div>
-      <motion.div
-        initial={false}
-        animate={{
-          rotate: theme === "light" ? 0 : -180,
-          scale: theme === "light" ? 1 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        className="absolute"
-      >
-        <Sun className="h-5 w-5" />
-      </motion.div>
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    </button>
   );
 };
 
